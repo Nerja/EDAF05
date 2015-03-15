@@ -1,0 +1,45 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+
+public class FileComperator {
+	public static boolean compareFiles(File f1, File f2) throws IOException {
+		List<String> file1Lines = getLines(f1);
+		List<String> file2Lines = getLines(f2);
+		
+		if(file1Lines == null && file2Lines == null) {
+			return true;
+		} else if(file1Lines == null || file2Lines == null) {
+			return false;
+		}
+		
+		for(String s : file1Lines) 
+			System.out.println(s);
+		
+		return file1Lines.equals(file2Lines);
+	}
+	
+	public static boolean compareFiles(String f1, String f2) throws IOException {
+		return compareFiles(new File(f1), new File(f2));
+	}
+	
+	private static List<String> getLines(File file) throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		List<String> list = new ArrayList<String>();
+		
+		String line = br.readLine();
+		while(line != null) {
+			list.add(line);
+			line = br.readLine();
+		}
+		br.close();
+		return list;
+	}
+	
+}
