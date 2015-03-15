@@ -13,7 +13,9 @@ public class FileComperator {
 		List<String> file1Lines = getLines(f1);
 		List<String> file2Lines = getLines(f2);
 		
-		if(file1Lines == null || file2Lines == null) {
+		if(file1Lines == null && file2Lines == null) {
+			return true;
+		} else if(file1Lines == null || file2Lines == null) {
 			return false;
 		}
 		
