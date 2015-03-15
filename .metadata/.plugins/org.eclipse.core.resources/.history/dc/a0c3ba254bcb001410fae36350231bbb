@@ -17,6 +17,9 @@ public class FileComperator {
 			return false;
 		}
 		
+		for(String s : file1Lines) 
+			System.out.println(s);
+		
 		return file1Lines.equals(file2Lines);
 	}
 	
