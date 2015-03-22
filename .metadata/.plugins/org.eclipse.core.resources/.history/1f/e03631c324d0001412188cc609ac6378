@@ -1,0 +1,39 @@
+import java.io.FileNotFoundException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
+
+public class MatchEngine {
+	public static void makeMatches(List<Man> haunters) {
+		//long startTime = System.currentTimeMillis();
+		List<Man> ini = new LinkedList<Man>(haunters);
+
+		/*for (Man m : ini) {
+			System.out.println(m.getName());
+		}*/
+		
+		while (!haunters.isEmpty()) {
+			List<Man> snapshot = new LinkedList<Man>(haunters);
+			ListIterator<Man> itr = snapshot.listIterator();
+			boolean someAction = false;
+			while (itr.hasNext()) {
+				if (itr.next().makeProposeRound()) {
+					someAction = true;
+				}
+			}
+			if (!someAction)
+				break;
+		}
+
+		for (Man m : ini) {
+			System.out.println(m);
+		}
+		//System.out.println(System.currentTimeMillis() - startTime);
+	}
+
+	public static void main(String[] args) throws FileNotFoundException {
+		// makeMatches(HauntersFactory.fakeHaunters());
+		makeMatches(HauntersFactory.haunters(args[0]));
+	}
+
+}

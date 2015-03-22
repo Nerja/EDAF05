@@ -7,14 +7,14 @@ import java.util.List;
 import java.util.Map;
 
 public class HauntersFactory {
-	public static List<Man> haunters(String file) throws IOException {
+	public static List<Human> haunters(String file) throws IOException {
 		Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
 		BufferedReader scan = new BufferedReader(new FileReader(file));
 		skipComments(scan);
 
-		Map<Integer, Man> men = new LinkedHashMap<Integer, Man>();
-		Map<Integer, Woman> women = new LinkedHashMap<Integer, Woman>();
-		List<Man> ravers = new LinkedList<Man>();
+		Map<Integer, Human> men = new LinkedHashMap<Integer, Human>();
+		Map<Integer, Human> women = new LinkedHashMap<Integer, Human>();
+		List<Human> ravers = new LinkedList<Human>();
 		loadHumans(scan, men, women, ravers);
 		loadDesiredPartners(scan, men, women);
 		scan.close();
@@ -23,7 +23,7 @@ public class HauntersFactory {
 	}
 
 	private static void loadDesiredPartners(BufferedReader scan,
-			Map<Integer, Man> men, Map<Integer, Woman> women)
+			Map<Integer, Human> men, Map<Integer, Human> women)
 			throws IOException {
 		String line;
 		line = scan.readLine();
@@ -46,17 +46,19 @@ public class HauntersFactory {
 		}
 	}
 
-	private static void loadHumans(BufferedReader scan, Map<Integer, Man> men,
-			Map<Integer, Woman> women, List<Man> ravers) throws IOException {
+	private static void loadHumans(BufferedReader scan,
+			Map<Integer, Human> men, Map<Integer, Human> women,
+			List<Human> ravers) throws IOException {
 		String line;
 		line = scan.readLine();
 		int index = 1;
 		while (line != null && !line.isEmpty()) {
 			String[] parts = line.split(" ");
+			Human human = new Human(parts[1], ravers);
 			if (index % 2 == 1)
-				men.put(Integer.parseInt(parts[0]), new Man(parts[1], ravers));
+				men.put(Integer.parseInt(parts[0]), human);
 			else
-				women.put(Integer.parseInt(parts[0]), new Woman(parts[1]));
+				women.put(Integer.parseInt(parts[0]), human);
 
 			index++;
 			line = scan.readLine();

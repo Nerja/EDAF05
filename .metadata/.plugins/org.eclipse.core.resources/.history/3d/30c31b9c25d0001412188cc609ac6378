@@ -1,0 +1,53 @@
+import java.util.LinkedList;
+import java.util.List;
+
+public class Man extends Human {
+
+	private String name;
+	private List<Woman> wantedWomen;
+	private List<Man> haunters;
+	private Woman currentPartner;
+
+	public Man(String name, List<Man> haunters) {
+		wantedWomen = new LinkedList<Woman>();
+		this.haunters = haunters;
+		this.name = name;
+	}
+
+	public boolean makeProposeRound() {
+		if (!wantedWomen.isEmpty() && currentPartner == null) {
+			propose(wantedWomen.remove(0));
+			return true;
+		}
+		return false;
+	}
+
+	private void propose(Woman theVictim) {
+		if (theVictim.reviewPropose(this)) {
+			currentPartner = theVictim;
+			haunters.remove(this);
+		}
+	}
+
+	public void addWantedWoman(Woman woman) {
+		wantedWomen.add(woman);
+	}
+
+	public void releaseToMarket() {
+		haunters.add(this);
+		currentPartner = null;
+	}
+
+	@Override
+	public String toString() {
+		return name + " -- " + currentPartner.getName();
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+}

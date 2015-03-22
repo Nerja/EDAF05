@@ -1,0 +1,10 @@
+
+public class abstract Human {
+	private List<Human> preferedList;
+	private boolean free;
+	
+	protected Human() {
+		preferedList = new ArrayList<Human>();
+		free = false;
+	}
+}

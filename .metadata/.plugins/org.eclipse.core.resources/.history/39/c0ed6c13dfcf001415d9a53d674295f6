@@ -1,0 +1,30 @@
+import java.util.LinkedList;
+import java.util.List;
+
+
+public class Man extends Human{
+
+	private List<Woman> wantedWomen;
+	private List<Man> haunters;
+	
+	public Man(List<Man> haunters) {
+		wantedWomen = new LinkedList<Woman>();
+		this.haunters = haunters;
+	}
+	
+	public void makeProposeRound() {
+		if(!wantedWomen.isEmpty()) {
+			propose(wantedWomen.remove(0));
+		}
+	}
+
+	private void propose(Woman proposeSuggestion) {
+		
+	}
+
+	public void releaseToMarket() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+}

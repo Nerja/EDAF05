@@ -1,0 +1,28 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+
+public class Woman extends Human{
+	private Map<Man, Integer> preferedList;
+	private Man partner;
+	
+	public Woman() {
+		preferedList = new HashMap<Man, Integer>();
+		partner = null;
+	}
+
+
+	public boolean reviewPropose(Man human) {
+		if(partner == null) {
+			partner = human;
+			return true;
+		} else {
+			if(preferedList.get(human) < preferedList.get(partner)) {
+				partner.breakUp();
+			}
+		}
+	}
+
+}

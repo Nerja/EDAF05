@@ -4,19 +4,19 @@ import java.util.List;
 import java.util.ListIterator;
 
 public class MatchEngine {
-	public static void makeMatches(List<Man> haunters) {
-		List<Man> ini = new LinkedList<Man>(haunters);
+	public static void makeMatches(List<Human> haunters) {
+		List<Human> ini = new LinkedList<Human>(haunters);
 		findMatchesForAllMen(haunters);
 		printMatches(ini);
 	}
 
-	private static void printMatches(List<Man> ini) {
+	private static void printMatches(List<Human> ini) {
 		for (Human m : ini) {
 			System.out.println(m);
 		}
 	}
 
-	private static void findMatchesForAllMen(List<Man> haunters) {
+	private static void findMatchesForAllMen(List<Human> haunters) {
 		boolean someAction = true;
 		while (!haunters.isEmpty() && someAction) {
 			someAction = false;
@@ -24,9 +24,9 @@ public class MatchEngine {
 		}
 	}
 
-	private static boolean makeProposeRound(List<Man> haunters) {
-		List<Man> snapshot = new LinkedList<Man>(haunters);
-		ListIterator<Man> itr = snapshot.listIterator();
+	private static boolean makeProposeRound(List<Human> haunters) {
+		List<Human> snapshot = new LinkedList<Human>(haunters);
+		ListIterator<Human> itr = snapshot.listIterator();
 		boolean roundGeneratedAction = false;
 		while (itr.hasNext()) {
 			if (itr.next().makeProposeRound()) {

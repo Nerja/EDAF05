@@ -1,0 +1,10 @@
+import java.util.HashMap;
+
+public class Woman extends Human {
+	public Woman(String name) {
+		preferedList = new HashMap<Human, Integer>();
+		partner = null;
+		this.name = name;
+	}
+
+}

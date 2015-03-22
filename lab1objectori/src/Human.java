@@ -1,20 +1,21 @@
+import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-public abstract class Human {
+public class Human {
 
 	protected Map<Human, Integer> preferedList;
 	protected String name;
 	protected Human partner;
+	protected List<Human> haunters;
 
-	public Human(String name) {
+	public Human(String name, List<Human> haunters) {
 		preferedList = new LinkedHashMap<Human, Integer>();
 		partner = null;
 		this.name = name;
-	}
-
-	public void releaseToMarket() {
-		partner = null;
+		this.haunters = haunters;
 	}
 
 	@Override
@@ -39,6 +40,34 @@ public abstract class Human {
 				return false;
 			}
 		}
+	}
+
+	public boolean makeProposeRound() {
+		if (!preferedList.isEmpty() && partner == null) {
+			propose(getProposeSuggestion());
+			return true;
+		}
+		return false;
+	}
+
+	private Human getProposeSuggestion() {
+		Set<Map.Entry<Human, Integer>> set = preferedList.entrySet();
+		Iterator<Map.Entry<Human, Integer>> itr = set.iterator();
+		Human suggestion = itr.next().getKey();
+		preferedList.remove(suggestion);
+		return suggestion;
+	}
+
+	private void propose(Human theVictim) {
+		if (theVictim.reviewPropose(this)) {
+			partner = theVictim;
+			haunters.remove(this);
+		}
+	}
+
+	public void releaseToMarket() {
+		haunters.add(this);
+		partner = null;
 	}
 
 }

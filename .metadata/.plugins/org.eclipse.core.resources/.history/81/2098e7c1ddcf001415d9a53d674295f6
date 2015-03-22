@@ -1,0 +1,16 @@
+
+public class Woman extends Human{
+	
+	public boolean reviewPropose(Man human) {
+		if(partner == null) {
+			partner = human;
+			return true;
+		} else {
+			if(preferedList.indexOf(human) < preferedList.indexOf(partner)) {
+				partner.breakUp();
+				partner = human;
+			}
+		}
+	}
+
+}

@@ -1,0 +1,12 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class Human {
+	private List<Human> preferedList;
+	private boolean free;
+	
+	protected Human() {
+		preferedList = new ArrayList<Human>();
+		free = false;
+	}
+}

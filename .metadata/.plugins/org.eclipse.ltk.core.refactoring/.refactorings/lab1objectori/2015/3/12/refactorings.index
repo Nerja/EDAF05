@@ -1,0 +1,22 @@
+1426951056014	Delete element
+1426960555957	Move file
+1426982068080	Pull up members to 'Human'
+1426982092245	Rename field 'currentPartner'
+1426982104824	Pull up 'partner' to 'Human'
+1426982218901	Pull up 'toString()' to 'Human'
+1426982240786	Rename method 'addWantedWoman'
+1426982247485	Rename method 'addWantedPartner'
+1426982263038	Rename method 'addPreferedMan'
+1426982338789	Pull up 'addDesiredPartner(Human)' to 'Human'
+1426982360840	Pull up 'reviewPropose(Human)' to 'Human'
+1426982400458	Move method
+1426982457305	Rename field 'wantedWomen'
+1426982617616	Extract method 'getProposeSuggestion'
+1426983178509	Extract method 'makeProposeRound'
+1426983325776	Extract method 'findMatchesForAllMen'
+1426983649042	Extract method 'printMatches'
+1426983766019	Extract method 'skipComments'
+1426983813328	Extract method 'loadHumans'
+1426983933488	Extract method 'loadDesiredPartners'
+1427024186204	Delete element
+1427024188760	Delete element

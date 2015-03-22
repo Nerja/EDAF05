@@ -1,0 +1,9 @@
+import java.util.Map;
+
+public abstract class Human {
+
+	protected Map<Man, Integer> preferedList;
+	protected String name;
+	protected Woman partner;
+
+}

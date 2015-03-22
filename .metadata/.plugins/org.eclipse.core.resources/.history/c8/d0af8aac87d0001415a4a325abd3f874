@@ -1,0 +1,44 @@
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+public class Man extends Human {
+
+	private List<Man> haunters;
+
+	public Man(String name, List<Man> haunters) {
+		super(name);
+		this.haunters = haunters;
+	}
+
+	public boolean makeProposeRound() {
+		if (!preferedList.isEmpty() && partner == null) {
+			propose(getProposeSuggestion());
+			return true;
+		}
+		return false;
+	}
+
+	private Human getProposeSuggestion() {
+		Set<Map.Entry<Human, Integer>> set = preferedList.entrySet();
+		Iterator<Map.Entry<Human, Integer>> itr = set.iterator();
+		Human suggestion = itr.next().getKey();
+		preferedList.remove(suggestion);
+		return suggestion;
+	}
+
+	private void propose(Human theVictim) {
+		if (theVictim.reviewPropose(this)) {
+			partner = theVictim;
+			haunters.remove(this);
+		}
+	}
+
+	@Override
+	public void releaseToMarket() {
+		haunters.add(this);
+		super.releaseToMarket();
+	}
+
+}

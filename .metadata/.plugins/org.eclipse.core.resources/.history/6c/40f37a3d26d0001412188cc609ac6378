@@ -1,0 +1,18 @@
+import java.util.Map;
+
+public abstract class Human {
+
+	protected Map<Human, Integer> preferedList;
+	protected String name;
+	protected Human partner;
+	
+	public void releaseToMarket() {
+		partner = null;
+	}
+
+	@Override
+	public String toString() {
+		return name + " -- " + partner.name;
+	}
+
+}

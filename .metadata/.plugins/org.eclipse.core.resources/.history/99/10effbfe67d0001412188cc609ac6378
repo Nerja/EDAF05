@@ -1,0 +1,75 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+
+public class HauntersFactory {
+	public static List<Man> haunters(String file) throws FileNotFoundException {
+		Scanner scan = new Scanner(new File(file));
+		skipComments(scan);
+
+		Map<Integer, Man> men = new LinkedHashMap<Integer, Man>();
+		Map<Integer, Woman> women = new LinkedHashMap<Integer, Woman>();
+		List<Man> ravers = new LinkedList<Man>();
+		loadHumans(scan, men, women, ravers);
+		loadDesiredPartners(scan, men, women);
+		scan.close();
+		ravers.addAll(men.values());
+		return ravers;
+	}
+
+	private static void loadDesiredPartners(Scanner scan,
+			Map<Integer, Man> men, Map<Integer, Woman> women) {
+		String line;
+		line = scan.nextLine();
+		int index = 1;
+		while (!line.isEmpty()) {
+			String[] parts = line.split(":");
+			Integer id = Integer.parseInt(parts[0]);
+			parts = parts[1].split(" ");
+			for (int i = 1; i < parts.length; i++) {
+				Long s = System.currentTimeMillis();
+				if (index % 2 == 1) {
+					men.get(id).addDesiredPartner(
+							women.get(Integer.parseInt(parts[i])));
+				} else {
+					women.get(id).addDesiredPartner(
+							men.get(Integer.parseInt(parts[i])));
+				}
+				System.out.println("Loadtime: " + (System.currentTimeMillis() - s));
+			}
+			index++;
+			if (!scan.hasNext())
+				break;
+			line = scan.nextLine();
+		}
+	}
+
+	private static void loadHumans(Scanner scan, Map<Integer, Man> men,
+			Map<Integer, Woman> women, List<Man> ravers) {
+		String line;
+		line = scan.nextLine();
+		int index = 1;
+		while (scan.hasNext() && !line.isEmpty()) {
+			String[] parts = line.split(" ");
+			if (index % 2 == 1)
+				men.put(Integer.parseInt(parts[0]), new Man(parts[1], ravers));
+			else
+				women.put(Integer.parseInt(parts[0]), new Woman(parts[1]));
+
+			index++;
+			line = scan.nextLine();
+		}
+	}
+
+	private static String skipComments(Scanner scan) {
+		String line = scan.nextLine();
+		while (line.charAt(0) == '#') {
+			line = scan.nextLine();
+		}
+		return line;
+	}
+}

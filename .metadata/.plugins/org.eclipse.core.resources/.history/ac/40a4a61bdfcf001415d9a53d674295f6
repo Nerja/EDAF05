@@ -1,0 +1,33 @@
+import java.util.LinkedList;
+import java.util.List;
+
+
+public class Man {
+
+	private List<Woman> wantedWomen;
+	private List<Man> haunters;
+	private Woman currentPartner;
+	
+	public Man(List<Man> haunters) {
+		wantedWomen = new LinkedList<Woman>();
+		this.haunters = haunters;
+	}
+	
+	public void makeProposeRound() {
+		if(!wantedWomen.isEmpty()) {
+			propose(wantedWomen.remove(0));
+		}
+	}
+
+	private void propose(Woman theVictim) {
+		if(theVictim.reviewPropose(this)) {
+			currentPartner = theVictim;
+		}
+	}
+
+	public void releaseToMarket() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+}

@@ -1,0 +1,46 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+
+public class Woman extends Human{
+	private Map<Man, Integer> preferedList;
+	private Man partner;
+	private String name;
+	
+	public Woman(String name) {
+		preferedList = new HashMap<Man, Integer>();
+		partner = null;
+		this.name = name;
+	}
+	
+	public void addPreferedMan(Man preferedMan, int attractiveNess) {
+		preferedList.put(preferedMan, attractiveNess);
+	}
+
+
+	public boolean reviewPropose(Man human) {
+		if(partner == null) {
+			partner = human;
+			return true;
+		} else {
+			System.out.println("my partner is " + partner + " my name is " + name + " i'm comp with " + human.getName());
+			for(Map.Entry<Man, Integer> w: preferedList.entrySet()) {
+				System.out.println(w);
+			}
+			if(preferedList.get(human) < preferedList.get(partner)) {
+				partner.releaseToMarket();
+				partner = human;
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+}

@@ -1,0 +1,18 @@
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+public abstract class Human {
+	private Set<Human> preferedList;
+	protected boolean free;
+	
+	protected Human() {
+		preferedList = new HashSet<Human>();
+		free = false;
+	}
+	
+	public void addPreferedHuman(Human preferedPartner) {
+		preferedList.add(preferedPartner);
+	}
+}

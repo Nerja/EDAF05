@@ -1,0 +1,28 @@
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
+public abstract class Human {
+	protected List<Human> preferedList;
+	private Human partner;
+	
+	protected Human() {
+		preferedList = new LinkedList<Human>();
+		partner = null;
+	}
+	
+	public void addPreferedHuman(Human preferedPartner) {
+		preferedList.add(preferedPartner);
+	}
+	
+	public boolean reviewPropose(Human human) {
+		if(partner == null) {
+			partner = human;
+			return true;
+		} else {
+			
+		}
+	}
+}

@@ -1,0 +1,29 @@
+import java.util.HashMap;
+
+public class Woman extends Human {
+	public Woman(String name) {
+		preferedList = new HashMap<Human, Integer>();
+		partner = null;
+		this.name = name;
+	}
+
+	public boolean reviewPropose(Human human) {
+		if (partner == null) {
+			partner = human;
+			return true;
+		} else {
+			if (preferedList.get(human) < preferedList.get(partner)) {
+				partner.releaseToMarket();
+				partner = human;
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+
+	public String getName() {
+		return name;
+	}
+
+}

@@ -1,0 +1,73 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+public class HauntersFactory {
+	public static List<Man> haunters(String file) throws IOException {
+		Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+		BufferedReader scan = new BufferedReader(new FileReader(file));
+		skipComments(scan);
+
+		Map<Integer, Man> men = new LinkedHashMap<Integer, Man>();
+		Map<Integer, Woman> women = new LinkedHashMap<Integer, Woman>();
+		List<Man> ravers = new LinkedList<Man>();
+		loadHumans(scan, men, women, ravers);
+		loadDesiredPartners(scan, men, women);
+		scan.close();
+		ravers.addAll(men.values());
+		return ravers;
+	}
+
+	private static void loadDesiredPartners(BufferedReader scan,
+			Map<Integer, Man> men, Map<Integer, Woman> women)
+			throws IOException {
+		String line;
+		line = scan.readLine();
+		int index = 1;
+		while (line != null && !line.isEmpty()) {
+			String[] parts = line.split(":");
+			Integer id = Integer.parseInt(parts[0]);
+			parts = parts[1].split(" ");
+			for (int i = 1; i < parts.length; i++) {
+				if (index % 2 == 1) {
+					men.get(id).addDesiredPartner(
+							women.get(Integer.parseInt(parts[i])));
+				} else {
+					women.get(id).addDesiredPartner(
+							men.get(Integer.parseInt(parts[i])));
+				}
+			}
+			index++;
+			line = scan.readLine();
+		}
+	}
+
+	private static void loadHumans(BufferedReader scan, Map<Integer, Man> men,
+			Map<Integer, Woman> women, List<Man> ravers) throws IOException {
+		String line;
+		line = scan.readLine();
+		int index = 1;
+		while (line != null && !line.isEmpty()) {
+			String[] parts = line.split(" ");
+			if (index % 2 == 1)
+				men.put(Integer.parseInt(parts[0]), new Man(parts[1], ravers));
+			else
+				women.put(Integer.parseInt(parts[0]), new Woman(parts[1]));
+
+			index++;
+			line = scan.readLine();
+		}
+	}
+
+	private static String skipComments(BufferedReader scan) throws IOException {
+		String line = scan.readLine();
+		while (line.charAt(0) == '#') {
+			line = scan.readLine();
+		}
+		return line;
+	}
+}
