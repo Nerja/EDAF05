@@ -1,53 +1,38 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.StringTokenizer;
 
 public class HauntersFactory {
 	public static List<Human> haunters(String file) throws IOException {
 		Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
 		BufferedReader scan = new BufferedReader(new FileReader(file));
-		skipComments(scan);
-
-		Map<Integer, Human> men = new LinkedHashMap<Integer, Human>();
-		Map<Integer, Human> women = new LinkedHashMap<Integer, Human>();
-		List<Human> ravers = new LinkedList<Human>();
-		loadHumans(scan, men, women, ravers);
-		loadDesiredPartners(scan, men, women);
+		Integer p = Integer.parseInt(skipComments(scan).split("=")[1]);
+		List<Human> ravers = new ArrayList<Human>(p / 2);
+		List<Human> humans = new ArrayList<Human>(p);
+		loadHumans(scan, humans, ravers);
+		loadDesiredPartners(scan, humans);
 		scan.close();
-		ravers.addAll(men.values());
 		return ravers;
 	}
 
 	private static void loadDesiredPartners(BufferedReader scan,
-			Map<Integer, Human> men, Map<Integer, Human> women)
-			throws IOException {
-		String line;
-		line = scan.readLine();
-		int index = 1;
+			List<Human> humans) throws IOException {
+		String line = scan.readLine();
 		while (line != null && !line.isEmpty()) {
-			String[] parts = line.split(":");
-			Integer id = Integer.parseInt(parts[0]);
-			parts = parts[1].split(" ");
-			for (int i = 1; i < parts.length; i++) {
-				if (index % 2 == 1) {
-					men.get(id).addDesiredPartner(
-							women.get(Integer.parseInt(parts[i])));
-				} else {
-					women.get(id).addDesiredPartner(
-							men.get(Integer.parseInt(parts[i])));
-				}
+			StringTokenizer st = new StringTokenizer(line, ": ");
+			Integer myId = Integer.parseInt(st.nextToken());
+			while (st.hasMoreTokens()) {
+				humans.get(myId - 1).addDesiredPartner(
+						humans.get(Integer.parseInt(st.nextToken()) - 1));
 			}
-			index++;
 			line = scan.readLine();
 		}
 	}
 
-	private static void loadHumans(BufferedReader scan,
-			Map<Integer, Human> men, Map<Integer, Human> women,
+	private static void loadHumans(BufferedReader scan, List<Human> humans,
 			List<Human> ravers) throws IOException {
 		String line;
 		line = scan.readLine();
@@ -55,10 +40,9 @@ public class HauntersFactory {
 		while (line != null && !line.isEmpty()) {
 			String[] parts = line.split(" ");
 			Human human = new Human(parts[1], ravers);
+			humans.add(human);
 			if (index % 2 == 1)
-				men.put(Integer.parseInt(parts[0]), human);
-			else
-				women.put(Integer.parseInt(parts[0]), human);
+				ravers.add(human);
 
 			index++;
 			line = scan.readLine();

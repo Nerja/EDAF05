@@ -1,0 +1,13 @@
+import java.util.Scanner;
+
+
+public class UglyImp {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(args[0]);
+		String line = scan.nextLine();
+		while(line.charAt(0) == "#")
+			line = scan.nextLine();
+		
+		
+	}
+}

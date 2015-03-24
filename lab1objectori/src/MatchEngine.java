@@ -37,7 +37,8 @@ public class MatchEngine {
 	}
 
 	public static void main(String[] args) throws IOException {
-		makeMatches(HauntersFactory.haunters(args[0]));
+		List<Human> rav = HauntersFactory.haunters(args[0]);
+		makeMatches(rav);
 	}
 
 }

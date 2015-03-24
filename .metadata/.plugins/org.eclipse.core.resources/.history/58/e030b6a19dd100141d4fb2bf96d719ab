@@ -1,0 +1,7 @@
+
+public class UglyImp {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(args[0]);
+		
+	}
+}
