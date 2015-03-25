@@ -1,21 +1,18 @@
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
-import java.util.Set;
 
 public class Human {
 
 	protected Map<Human, Integer> preferedList;
 	protected String name;
 	protected Human partner;
-	protected List<Human> haunters;
 
-	public Human(String name, List<Human> haunters) {
+	public Human(String name) {
 		preferedList = new LinkedHashMap<Human, Integer>();
 		partner = null;
 		this.name = name;
-		this.haunters = haunters;
 	}
 
 	@Override
@@ -27,46 +24,45 @@ public class Human {
 		preferedList.put(human, preferedList.size());
 	}
 
-	public boolean reviewPropose(Human human) {
+	public boolean reviewPropose(Human human, ListIterator<Human> itr) {
+		boolean accepted = true;
 		if (partner == null) {
 			partner = human;
-			return true;
 		} else {
-			if (preferedList.get(human) < preferedList.get(partner)) {
-				partner.releaseToMarket();
+			accepted = preferedList.get(human) < preferedList.get(partner);
+			if (accepted) {
+				partner.releaseToMarket(itr);
 				partner = human;
-				return true;
-			} else {
-				return false;
 			}
 		}
+		return accepted;
 	}
 
-	public boolean makeProposeRound() {
-		if (!preferedList.isEmpty() && partner == null) {
-			propose(getProposeSuggestion());
-			return true;
+	public boolean makeProposeRound(ListIterator<Human> itr) {
+		boolean someoneToProposeTo = !preferedList.isEmpty() && partner == null;
+		if (someoneToProposeTo) {
+			propose(getProposeSuggestion(), itr);
 		}
-		return false;
+		return someoneToProposeTo;
 	}
 
 	private Human getProposeSuggestion() {
-		Set<Map.Entry<Human, Integer>> set = preferedList.entrySet();
-		Iterator<Map.Entry<Human, Integer>> itr = set.iterator();
+		Iterator<Map.Entry<Human, Integer>> itr = preferedList.entrySet()
+				.iterator();
 		Human suggestion = itr.next().getKey();
 		preferedList.remove(suggestion);
 		return suggestion;
 	}
 
-	private void propose(Human theVictim) {
-		if (theVictim.reviewPropose(this)) {
+	private void propose(Human theVictim, ListIterator<Human> itr) {
+		if (theVictim.reviewPropose(this, itr)) {
 			partner = theVictim;
-			haunters.remove(this);
 		}
 	}
 
-	public void releaseToMarket() {
-		haunters.add(this);
+	public void releaseToMarket(ListIterator<Human> itr) {
+		itr.remove();
+		itr.add(this);
 		partner = null;
 	}
 

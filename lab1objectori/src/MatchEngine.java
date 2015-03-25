@@ -11,25 +11,23 @@ public class MatchEngine {
 	}
 
 	private static void printMatches(List<Human> ini) {
-		for (Human m : ini) {
-			System.out.println(m);
+		for (Human human : ini) {
+			System.out.println(human);
 		}
 	}
 
 	private static void findMatchesForAllMen(List<Human> haunters) {
 		boolean someAction = true;
 		while (!haunters.isEmpty() && someAction) {
-			someAction = false;
 			someAction = makeProposeRound(haunters);
 		}
 	}
 
 	private static boolean makeProposeRound(List<Human> haunters) {
-		List<Human> snapshot = new LinkedList<Human>(haunters);
-		ListIterator<Human> itr = snapshot.listIterator();
+		ListIterator<Human> itr = haunters.listIterator();
 		boolean roundGeneratedAction = false;
 		while (itr.hasNext()) {
-			if (itr.next().makeProposeRound()) {
+			if (itr.next().makeProposeRound(itr)) {
 				roundGeneratedAction = true;
 			}
 		}

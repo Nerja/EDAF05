@@ -7,40 +7,39 @@ import java.util.StringTokenizer;
 
 public class HauntersFactory {
 	public static List<Human> haunters(String file) throws IOException {
-		Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
 		BufferedReader scan = new BufferedReader(new FileReader(file));
 		Integer p = Integer.parseInt(skipComments(scan).split("=")[1]);
 		List<Human> ravers = new ArrayList<Human>(p / 2);
-		List<Human> humans = new ArrayList<Human>(p);
+		Human[] humans = new Human[p * 2];
 		loadHumans(scan, humans, ravers);
 		loadDesiredPartners(scan, humans);
 		scan.close();
 		return ravers;
 	}
 
-	private static void loadDesiredPartners(BufferedReader scan,
-			List<Human> humans) throws IOException {
+	private static void loadDesiredPartners(BufferedReader scan, Human[] humans)
+			throws IOException {
 		String line = scan.readLine();
 		while (line != null && !line.isEmpty()) {
 			StringTokenizer st = new StringTokenizer(line, ": ");
 			Integer myId = Integer.parseInt(st.nextToken());
 			while (st.hasMoreTokens()) {
-				humans.get(myId - 1).addDesiredPartner(
-						humans.get(Integer.parseInt(st.nextToken()) - 1));
+				Human desiredPartner = humans[Integer.parseInt(st.nextToken()) - 1];
+				humans[myId - 1].addDesiredPartner(desiredPartner);
 			}
 			line = scan.readLine();
 		}
 	}
 
-	private static void loadHumans(BufferedReader scan, List<Human> humans,
+	private static void loadHumans(BufferedReader scan, Human[] humans,
 			List<Human> ravers) throws IOException {
 		String line;
 		line = scan.readLine();
 		int index = 1;
 		while (line != null && !line.isEmpty()) {
 			String[] parts = line.split(" ");
-			Human human = new Human(parts[1], ravers);
-			humans.add(human);
+			Human human = new Human(parts[1]);
+			humans[index - 1] = human;
 			if (index % 2 == 1)
 				ravers.add(human);
 
