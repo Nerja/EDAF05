@@ -23,7 +23,6 @@ public class TestGS {
 	 */
 	private void runTestCase(String testname) throws IOException {
 		System.out.println("Running test: " + testname);
-		testname = "words-5757";
 		String wordfile = TESTDATA_DIR + SC + testname + ".dat";
 		String infile = TESTDATA_DIR + SC + testname + "-test.in";
 		String outfile = TESTDATA_DIR + SC + testname + "-test.out";
@@ -38,7 +37,7 @@ public class TestGS {
 		String[] args = new String[2];
 		args[0] = wordfile;
 		args[1] = infile;
-		SearchEngine.main(args); // FIXME: Change GS to your own class!
+		LaunchBad.main(args); // FIXME: Change GS to your own class!
 
 		/*
 		 * Restore stdout
