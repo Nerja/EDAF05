@@ -2,10 +2,16 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Queue;
 
 public class MatchEngine {
-	public static void makeMatches(List<Human> haunters) {
-		List<Human> ini = new LinkedList<Human>(haunters);
+	
+	public static void main(String[] args) throws IOException {
+		makeMatches(HauntersFactory.haunters(args[0]));
+	}
+	
+	public static void makeMatches(List<Human> ini) {
+		Queue<Human> haunters = new LinkedList<Human>(ini);
 		findMatchesForAllMen(haunters);
 		printMatches(ini);
 	}
@@ -16,27 +22,10 @@ public class MatchEngine {
 		}
 	}
 
-	private static void findMatchesForAllMen(List<Human> haunters) {
-		boolean someAction = true;
-		while (!haunters.isEmpty() && someAction) {
-			someAction = makeProposeRound(haunters);
+	private static void findMatchesForAllMen(Queue<Human> haunters) {
+		while (!haunters.isEmpty()) {
+			haunters.poll().makeProposeRound(haunters);
 		}
 	}
-
-	private static boolean makeProposeRound(List<Human> haunters) {
-		ListIterator<Human> itr = haunters.listIterator();
-		boolean roundGeneratedAction = false;
-		while (itr.hasNext()) {
-			if (itr.next().makeProposeRound(itr)) {
-				roundGeneratedAction = true;
-			}
-		}
-		return roundGeneratedAction;
-	}
-
-	public static void main(String[] args) throws IOException {
-		List<Human> rav = HauntersFactory.haunters(args[0]);
-		makeMatches(rav);
-	}
-
+	
 }

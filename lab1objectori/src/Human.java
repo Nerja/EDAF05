@@ -1,7 +1,7 @@
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.ListIterator;
 import java.util.Map;
+import java.util.Queue;
 
 public class Human {
 
@@ -20,30 +20,25 @@ public class Human {
 		return name + " -- " + partner.name;
 	}
 
-	public void addDesiredPartner(Human human) {
-		preferedList.put(human, preferedList.size());
+	public void addDesiredPartner(Human haunters) {
+		preferedList.put(haunters, preferedList.size());
 	}
 
-	public boolean reviewPropose(Human human, ListIterator<Human> itr) {
-		boolean accepted = true;
+	public boolean reviewPropose(Human human, Queue<Human> haunters) {
 		if (partner == null) {
 			partner = human;
-		} else {
-			accepted = preferedList.get(human) < preferedList.get(partner);
-			if (accepted) {
-				partner.releaseToMarket(itr);
-				partner = human;
-			}
+			return true;
+		} else if(preferedList.get(human) < preferedList.get(partner)) {
+			partner.releaseToMarket(haunters);
+			partner = human;
+			return true;
 		}
-		return accepted;
+		return false;
 	}
 
-	public boolean makeProposeRound(ListIterator<Human> itr) {
-		boolean someoneToProposeTo = !preferedList.isEmpty() && partner == null;
-		if (someoneToProposeTo) {
-			propose(getProposeSuggestion(), itr);
-		}
-		return someoneToProposeTo;
+	public void makeProposeRound(Queue<Human> haunters) {
+		if(!propose(getProposeSuggestion(), haunters))
+			haunters.add(this);	
 	}
 
 	private Human getProposeSuggestion() {
@@ -54,15 +49,16 @@ public class Human {
 		return suggestion;
 	}
 
-	private void propose(Human theVictim, ListIterator<Human> itr) {
-		if (theVictim.reviewPropose(this, itr)) {
+	private boolean propose(Human theVictim, Queue<Human> haunters) {
+		if (theVictim.reviewPropose(this, haunters)) {
 			partner = theVictim;
+			return true;
 		}
+		return false;
 	}
 
-	public void releaseToMarket(ListIterator<Human> itr) {
-		itr.remove();
-		itr.add(this);
+	public void releaseToMarket(Queue<Human> haunters) {
+		haunters.add(this);
 		partner = null;
 	}
 
