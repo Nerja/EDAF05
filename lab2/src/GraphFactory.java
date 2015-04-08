@@ -1,30 +1,33 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class GraphFactory {
-	public static List<String>[] getNeighbours(String[] words) {
+	public static Map<String, List<String>> getNeighbours(String[] words) {
 		List<char[]> sneakyCache = new ArrayList<char[]>(words.length);
 		for (int i = 0; i < words.length; i++) {
 			sneakyCache.add(i, words[i].toCharArray());
 		}
 
-		@SuppressWarnings("unchecked")
-		List<String>[] neighbours = (List<String>[]) new ArrayList[words.length];
+		Map<String, List<String>> myGraph = new HashMap<String, List<String>>();
 		for (int i = 0; i < words.length; i++) {
-			attatch(i, neighbours, words, sneakyCache);
+			attatch(i, myGraph, words, sneakyCache);
 		}
-		return neighbours;
+
+		return myGraph;
 	}
 
-	private static void attatch(int index, List<String>[] neighbours,
+	private static void attatch(int index, Map<String, List<String>> myGraph,
 			String[] words, List<char[]> sneakyCache) {
-		neighbours[index] = new ArrayList<String>();
+		myGraph.put(words[index], new LinkedList<String>());
 		for (int i = 0; i < words.length; i++) {
 			String possibleBuddy = words[i];
 			if (possibleBuddy.equals(words[index]))
 				continue;
 			else if (ladderPossible(sneakyCache.get(index), sneakyCache.get(i)))
-				neighbours[index].add(possibleBuddy);
+				myGraph.get(words[index]).add(possibleBuddy);
 		}
 	}
 

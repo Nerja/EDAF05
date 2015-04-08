@@ -1,5 +1,4 @@
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,16 +9,12 @@ import java.util.Set;
 public class LaunchBad {
 	public static void main(String[] args) throws IOException {
 		String[] words = WordFactory.readWords((args[0]));
-		List<String>[] neighbours = GraphFactory.getNeighbours(words);
+		Map<String, List<String>> neighbours = GraphFactory
+				.getNeighbours(words);
 		Pair<String>[] wantedMappings = PairFactory.readPairs(args[1]);
-		
-		Map<String, List<String>> myGraph = new HashMap<String, List<String>>();
-		for (int i = 0; i < words.length; i++) {
-			myGraph.put(words[i], neighbours[i]);
-		}
-		
+
 		for (Pair<String> wantedMapping : wantedMappings) {
-			System.out.println(findDistance(wantedMapping, myGraph));
+			System.out.println(findDistance(wantedMapping, neighbours));
 		}
 	}
 
