@@ -37,7 +37,7 @@ public class TestGS {
 		String[] args = new String[2];
 		args[0] = wordfile;
 		args[1] = infile;
-		LaunchBad.main(args); // FIXME: Change GS to your own class!
+		LadderFinder.main(args); // FIXME: Change GS to your own class!
 
 		/*
 		 * Restore stdout

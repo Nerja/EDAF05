@@ -14,13 +14,7 @@ public class WordFactory {
 			line = br.readLine();
 		}
 		br.close();
-		return words.toArray(new String[1]);
+		return words.toArray(new String[0]);
 	}
 
-	public static void main(String[] args) throws IOException {
-		long t = System.currentTimeMillis();
-		String[] words = readWords("files/words-5757.dat");
-		System.out.println("Wordread took: " + (System.currentTimeMillis() - t)
-				+ " loaded" + words.length);
-	}
 }
