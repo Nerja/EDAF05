@@ -51,6 +51,7 @@ public class Graph {
 					if (n.getWord().equals(n2)) {
 						dist -= 1; //Will add an extra 1 at the end of loop,, so get rid of that one
 						foundChild = true;
+						break;
 					} else {
 						for(Node c : n.getChildren()){
 							if(!c.getVisited()){
@@ -71,11 +72,6 @@ public class Graph {
 	public void resetGraph(){
 		for(Node n : m_graph){
 			n.setVisit(false);
-		}
-	}
-	public void printGraph() {
-		for (Node n : m_graph) {
-			System.out.println(n.toString());
 		}
 	}
 }

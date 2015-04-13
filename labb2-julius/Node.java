@@ -11,7 +11,7 @@ public class Node {
 	private boolean m_hasVisited;
 
 	public Node(String word) {
-		this.m_word = word;
+		m_word = word;
 		m_children = new ArrayList<Node>();
 		m_hasVisited = false;
 	}
@@ -58,12 +58,4 @@ public class Node {
 		}
 
 	}
-	
-	@Override
-	public String toString() {
-		String rs = m_word;
-
-		return rs;
-	}
-
 }

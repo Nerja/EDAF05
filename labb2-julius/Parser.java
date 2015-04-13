@@ -33,10 +33,4 @@ public class Parser {
 	public List<String> getWords(){
 		return m_words;
 	}
-
-	public void test(){
-		for(String s : m_words){
-			System.out.println(s);
-		}
-	}
 }
