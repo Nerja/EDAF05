@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Edge implements Comparable<Edge>  {
+public class Edge  {
 
 	private Node[] m_endPoints;
 	private int m_weight;
@@ -37,12 +37,8 @@ public class Edge implements Comparable<Edge>  {
 	public String toString() {
 		return m_endPoints[0].getName() + " <-> " + m_endPoints[1].getName() + "\n";
 	}
-	
-	public int compareTo(Edge e) {
-		return m_weight - e.getWeight();
-	}
 
-	public List<Edge> getNeighbhours(){
+	public List<Edge> getNeighbours(){
 		List<Edge> rl = new LinkedList<Edge>();
 		rl.addAll(m_endPoints[0].getEdges());
 		rl.addAll(m_endPoints[1].getEdges());
