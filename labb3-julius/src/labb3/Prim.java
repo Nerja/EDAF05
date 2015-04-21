@@ -37,8 +37,7 @@ public class Prim {
 			m_chosenEdges.add(cheapest);
 			result += cheapest.getWeight();
 
-			m_possibleEdges.addAll(cheapest.getNodes()[0].getEdges());
-			m_possibleEdges.addAll(cheapest.getNodes()[1].getEdges());
+			m_possibleEdges.addAll(cheapest.getNeighbours());
 		}
 
 		return result;
