@@ -1,4 +1,4 @@
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -11,7 +11,7 @@ import org.junit.Test;
 
 public class TestGS {
 	private final static String TESTDATA_DIR = "files";
-	private final static double ALLOWED_INACCURICY = 0.000000001;
+	private final static double ALLOWED_INACCURACY = 0.000000001;
 
 	/**
 	 * Method to run an actual test case.
@@ -45,16 +45,15 @@ public class TestGS {
 		if (!ok) {
 			double myResp = Double.parseDouble(baos.toString().split(" ")[1]);
 			double thoreResp = Double.parseDouble(parts[1]);
-			System.out.println(testname + " # " + myResp + "  THORE : "
-					+ thoreResp);
-			ok = Math.abs(myResp - thoreResp) < ALLOWED_INACCURICY ? true
+			System.out.format("%-30s%-30s%-30s\n", testname, myResp, thoreResp);
+			ok = Math.abs(myResp - thoreResp) < ALLOWED_INACCURACY ? true
 					: false;
 			if (!ok) {
-				System.out.println("FALING TO DO " + testname + ": " + myResp
+				System.out.println("FAILED TO DO " + testname + ": " + myResp
 						+ "  with thore " + thoreResp);
 			}
 		}
-		assertEquals(true, ok);
+		assertTrue(("FAILED TO DO " + testname), ok);
 	}
 
 	/**
@@ -69,6 +68,8 @@ public class TestGS {
 	public void testAll() throws IOException {
 		File resultFile = new File(TESTDATA_DIR + "/closest-pair.out");
 		BufferedReader br = new BufferedReader(new FileReader(resultFile));
+		System.out.format("%-30s%-30s%-30s\n", "Filnamn", "Mitt svar",
+				"Thores svar");
 		String line = br.readLine();
 		while (line != null) {
 			String[] parts = line.split(":");
